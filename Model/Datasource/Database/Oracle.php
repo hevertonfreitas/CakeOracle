@@ -1024,18 +1024,28 @@ class Oracle extends DboSource {
     }
 
     /**
-     * Enter description here...
+     * Queries associations.
      *
-     * @param Model $model
-     * @param unknown_type $linkModel
-     * @param string $type Association type
-     * @param unknown_type $association
-     * @param unknown_type $assocData
-     * @param unknown_type $queryData
-     * @param unknown_type $external
-     * @param unknown_type $resultSet
-     * @param integer $recursive Number of levels of association
-     * @param array $stack
+     * Used to fetch results on recursive models.
+     *
+     * - 'hasMany' associations with no limit set:
+     *    Fetch, filter and merge is done recursively for every level.
+     *
+     * - 'hasAndBelongsToMany' associations:
+     *    Fetch and filter is done unaffected by the (recursive) level set.
+     *
+     * @param Model $Model Primary Model object.
+     * @param Model $LinkModel Linked model object.
+     * @param string $type Association type, one of the model association types ie. hasMany.
+     * @param string $association Association name.
+     * @param array $assocData Association data.
+     * @param array &$queryData An array of queryData information containing keys similar to Model::find().
+     * @param bool $external Whether or not the association query is on an external datasource.
+     * @param array &$resultSet Existing results.
+     * @param int $recursive Number of levels of association.
+     * @param array $stack A list with joined models.
+     * @return mixed
+     * @throws CakeException when results cannot be created.
      */
     public function queryAssociation(Model $model, Model $linkModel, $type, $association, $assocData, &$queryData, $external, &$resultSet, $recursive, $stack) {
         if ($query = $this->generateAssociationQuery($model, $linkModel, $type, $association, $assocData, $queryData, $external, $resultSet)) {
