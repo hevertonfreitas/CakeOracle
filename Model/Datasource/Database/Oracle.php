@@ -1203,20 +1203,23 @@ class Oracle extends DboSource {
         return $out;
     }
 
+    /**
+     * Checks if the result is valid
+     *
+     * @return bool True if the result is valid else false
+     */
     public function hasResult() {
         return true;
     }
 
     /**
-     * Insere multiplos valores em uma tabela. Testar mais!
+     * Inserts multiple values into a table
      *
      * @param string $table The table being inserted into.
      * @param array $fields The array of field/column names being inserted.
      * @param array $values The array of values to insert. The values should
      *   be an array of rows. Each row should have values keyed by the column name.
      *   Each row must have the values in the same order as $fields.
-     * @author Heverton Coneglian <hevertonfreitas1@yahoo.com.br>
-     * @link http://php.net/manual/en/function.oci-bind-by-name.php Função pra bind os valores
      * @return bool
      */
     public function insertMulti($table, $fields, $values) {
@@ -1257,6 +1260,11 @@ class Oracle extends DboSource {
         return $this->commit();
     }
 
+    /**
+     * Get the underlying connection object.
+     *
+     * @return resource OCI
+     */
     public function getConnection() {
         return $this->connection;
     }
